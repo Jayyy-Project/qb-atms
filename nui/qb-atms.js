@@ -51,10 +51,10 @@ function populateCurrentCards(data) {
         var cardNumber = "************" + res;
         if(card.cardActive !== undefined && card.cardActive !== null && card.cardActive === true) {
             cardStatus = '<span class="text-success">(Active)</span> ';
-            $('#cardsDisplay').append('<div class="card mb-3 mx-auto" style="width:100%; background:#505050; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); color: #dcdcdc"><div class="row no-gutters"><div class="col-2 my-auto text-center"><img src="images/' + image + '" class="img-fluid" width="100" alt=""></div><div class="col-8"><div class="card-body p-0"><h5 class="card-title pb-0 pt-1 pl-2 mb-0" style="color: #fff" id="cardOwner-' + index + '">' + card.name + '</h5><p class="card-text pl-2"><small class="text-muted"><span style="color: #fff" id="cardType-' + index + '">' + cardStatus + '' + card.cardType + '</span><br><span style="color: #a8a8a8; font-size: 12px;" id="cardNumber-' + index + '">' + cardNumber + '</span></small></p></div></div><div class="col-2 my-auto pr-1"><button class="btn btn-primary btn-sm btn-block" style="font-size: 12px;" id="cardBtn-' + index + '" data-action="useCard">Use</button></div></div></div>');
+            $('#cardsDisplay').append('<div class="card mb-3 mx-auto" style="width:100%; background:#505050; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); color: #dcdcdc"><div class="row no-gutters"><div class="col-2 my-auto text-center"><img src="images/' + image + '" class="img-fluid" width="100" alt=""></div><div class="col-8"><div class="card-body p-0"><h5 class="card-title pb-0 pt-1 pl-2 mb-0" style="color: #1a85ff" id="cardOwner-' + index + '">' + card.name + '</h5><p class="card-text pl-2"><small class="text-muted"><span style="color: #1a85ff" id="cardType-' + index + '">' + cardStatus + '' + card.cardType + '</span><br><span style="color: #1a85ff; font-size: 12px;" id="cardNumber-' + index + '">' + cardNumber + '</span></small></p></div></div><div class="col-2 my-auto pr-1"><button class="btn btn-primary btn-sm btn-block" style="font-size: 12px;" id="cardBtn-' + index + '" data-action="useCard">Use</button></div></div></div>');
         } else {
             cardStatus = '';
-            $('#cardsDisplay').append('<div class="card mb-3 mx-auto" style="width:100%; background:#505050; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); color: #dcdcdc"><div class="row no-gutters"><div class="col-2 my-auto text-center"><img src="images/' + image + '" class="img-fluid" width="100" alt=""></div><div class="col-8"><div class="card-body p-0"><h5 class="card-title pb-0 pt-1 pl-2 mb-0" style="color: #fff" id="cardOwner-' + index + '">' + card.name + '</h5><p class="card-text pl-2"><small class="text-muted"><span style="color: #fff" id="cardType-' + index + '">' + cardStatus + '' + card.cardType + '</span><br><span style="color: #a8a8a8; font-size: 12px;" id="cardNumber-' + index + '">' + cardNumber + '</span></small></p></div></div><div class="col-2 my-auto pr-1"><button class="btn btn-danger btn-block" style=" font-size: 11px;" id="cardBtn-' + index + '" data-action="removeCard">Remove</button></div></div></div>');
+            $('#cardsDisplay').append('<div class="card mb-3 mx-auto" style="width:100%; background:#505050; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); color: #dcdcdc"><div class="row no-gutters"><div class="col-2 my-auto text-center"><img src="images/' + image + '" class="img-fluid" width="100" alt=""></div><div class="col-8"><div class="card-body p-0"><h5 class="card-title pb-0 pt-1 pl-2 mb-0" style="color: #1a85ff" id="cardOwner-' + index + '">' + card.name + '</h5><p class="card-text pl-2"><small class="text-muted"><span style="color: #1a85ff" id="cardType-' + index + '">' + cardStatus + '' + card.cardType + '</span><br><span style="color: #1a85ff; font-size: 12px;" id="cardNumber-' + index + '">' + cardNumber + '</span></small></p></div></div><div class="col-2 my-auto pr-1"><button class="btn btn-danger btn-block" style=" font-size: 11px;" id="cardBtn-' + index + '" data-action="removeCard">Remove</button></div></div></div>');
         }
         
         $('#cardBtn-' + index).data('card', card);
@@ -179,27 +179,26 @@ $( function() {
         }));
     });
 
-    document.querySelector('#withdrawAmountATM').addEventListener('keyup', (evt) => {
-        document.querySelector('[data-withdrawal=manual]').setAttribute('data-amount', evt.target.value);
-    });
-
-    document.querySelectorAll('[data-withdrawal]').forEach(function (element) {
-        element.addEventListener('click', (evt) => {
-            const amount = evt.target.getAttribute('data-amount');
-            const errorMessage = document.getElementById('withdrawATMErrorMsg');
-            errorMessage.classList.add('d-none');
-
-            if (amount == undefined || amount == null || amount <= 0) {
-                errorMessage.classList.remove('d-none');
-                return errorMessage.innerHTML = 'An error occurred with your withdrawal, please try again.';
-            }
-
+    $(document).on('click','[data-action=ATMwithdraw]',function(){
+        var amount = $(this).data('amount');
+        if(amount !== undefined && amount !== null && amount !== 0) {
             $.post("https://qb-atms/doATMWithdraw", JSON.stringify({
                 amount: parseInt(amount),
                 cid: clientCid,
                 cardnumber: cardNumb
             }));
-        });
+        }
+    });
+
+    $(document).on('click','#initiateWithdrawATM',function(){
+        var amount = $('#withdrawAmountATM').val();
+        if(amount !== undefined && amount !== null && amount !== 0) {
+            $.post("https://qb-atms/doATMWithdraw", JSON.stringify({
+                amount: parseInt(amount),
+                cid: clientCid,
+                cardnumber: cardNumb
+            }));
+        }
     });
 
     $(document).on('click','[data-act=enterNumber]',function(){

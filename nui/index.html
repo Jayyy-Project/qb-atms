@@ -42,7 +42,7 @@
     </div>
     <div class="row" style="position: relative; top: 54px;">
         <div class="col-12 text-center">
-            <button class="btn btn-danger" id="cancelTransaction" style=" color: white">Cancel Transaction</button>
+            <button class="btn btn-danger" id="cancelTransaction" style=" color: rgb(2, 2, 2)">Cancel Transaction</button>
         </div>
     </div>
 </div>
@@ -75,7 +75,7 @@
         <div class="col-4 text-center"><button class="btn btn-block btn-info" data-act="enterNumber" data-number="9">9</button></div>
     </div>
     <div class="row m-1" style="position: relative; top: 5px;">
-        <div class="col-4 text-center"><button class="btn btn-block btn-danger" data-act="enterNumber" data-number="CANCEL">CANCEL</button></div>
+        <div class="col-4 text-center"><button class="btn btn-block btn-danger1" data-act="enterNumber" data-number="CANCEL">CANCEL</button></div>
         <div class="col-4 text-center"><button class="btn btn-block btn-info" data-act="enterNumber" data-number="0">0</button></div>
         <div class="col-4 text-center"><button class="btn btn-block btn-success" data-act="enterNumber" data-number="ACCEPT" id="acceptButton">ACCEPT</button></div>
     </div>
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <button class="btn btn-block btn-danger mt-2" id="logoffbuttonatm">Logoff</button>
+                                        <button class="btn btn-block btn-danger2 mt-2" id="logoffbuttonatm">Logoff</button>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                                         <div class="card mb-3" style="background:rgba(51, 51, 51, 0.8); color: #fff">
                                             <div class="card-header"><i class="fad fa-fw fa-money-bill-wave"></i> Current Account Balance</div>
                                             <div class="card-body">
-                                              <h5 class="card-title" id="currentBalanceATM" style=" color: #28a745"></h5>
+                                              <h5 class="card-title" id="currentBalanceATM" style=" color: #ffffff"></h5>
                                               <p class="card-text">This is currently how much is avaliable to spend in your account.</p>
                                             </div>
                                         </div>
@@ -152,7 +152,7 @@
                                         <div class="card mb-3" style="background:rgba(51, 51, 51, 0.8); color: #fff">
                                             <div class="card-header"><i class="fad fa-fw fa-coin"></i> Current Cash Balance</div>
                                             <div class="card-body">
-                                              <h5 class="card-title" id="currentCashBalanceATM" style=" color: #28a745"></h5>
+                                              <h5 class="card-title" id="currentCashBalanceATM" style=" color: #ffffff"></h5>
                                               <p class="card-text">This is currently how much cash you have on your person.</p>
                                             </div>
                                         </div>
@@ -166,12 +166,8 @@
                                             <div class="card-body">
                                                 <div class="container-fluid">
                                                     <div class="row m-1">
-                                                        <div class="col-6">
-                                                            <button class="btn btn-secondary2 btn-block" data-withdrawal="preset" data-amount="100">Withdrawal $100</button>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <button class="btn btn-secondary2 btn-block" data-withdrawal="preset" data-amount="1000">Withdrawal $1000</button>
-                                                        </div>
+                                                        <div class="col-6"><button class="btn btn-secondary2 btn-block" data-action="ATMwithdraw" data-amount="100">Withdrawal $100</button></div>
+                                                        <div class="col-6"><button class="btn btn-secondary2 btn-block" data-action="ATMwithdraw" data-amount="1000">Withdrawal $1000</button></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -197,7 +193,7 @@
                                             <div class="card mb-3" style="background:rgba(51, 51, 51, 0.8); color: #fff">
                                                 <div class="card-header"><i class="fad fa-fw fa-money-bill-wave"></i> Current Account Balance</div>
                                                 <div class="card-body">
-                                                  <h5 class="card-title" id="currentBalanceATM1" style=" color: #28a745"></h5>
+                                                  <h5 class="card-title" id="currentBalanceATM1" style=" color: #ffffff"></h5>
                                                   <p class="card-text">This is currently how much is avaliable to spend in your account.</p>
                                                 </div>
                                             </div>
@@ -206,7 +202,7 @@
                                             <div class="card mb-3" style="background:rgba(51, 51, 51, 0.8); color: #fff">
                                                 <div class="card-header"><i class="fad fa-fw fa-coin"></i> Current Cash Balance</div>
                                                 <div class="card-body">
-                                                  <h5 class="card-title" id="currentCashBalance1ATM" style=" color: #28a745"></h5>
+                                                  <h5 class="card-title" id="currentCashBalance1ATM" style=" color: #ffffff"></h5>
                                                   <p class="card-text">This is currently how much cash you have on your person.</p>
                                                 </div>
                                             </div>
@@ -217,16 +213,18 @@
                                                 <div class="card mb-3" style="background:rgba(51, 51, 51, 0.8); color: white">
                                                         <div class="card-body">
                                                             <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="alert alert-danger d-none" id="withdrawATMErrorMsg">
-                                                                        An unexpected error has occured, please try again later.
+                                                                <div class="row" id="withdrawATMError" style="display:none;">
+                                                                    <div class="col-12">
+                                                                        <div class="alert alert-danger" role="alert" id="withdrawATMErrorMsg">
+                                                                            
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
-                                                                    <div class="col-12 content">Please specify the amount you wish to Withdraw below.</div>
-                                                                </div>
-                                                                <div class="row mt-2">
-                                                                    <div class="col-3 my-auto"><label for="withdrawAmountATM"><small>Amount to Withdraw</small></label></div>
+                                                                    <div class="row">
+                                                                        <div class="col-12 content">Please specify the amount you wish to Withdraw below.</div>
+                                                                    </div>
+                                                                <div class="row mt-2">  
+                                                                    <div class="col-3 my-auto"><label for="withdrawAmounATMt"><small>Amount to Withdraw</small></label></div>
                                                                     <div class="col-9"><input type="number" placeholder="$" class="form-control" id="withdrawAmountATM" name="withdrawAmountATM"></div>
                                                                 </div>
                                                             </div>
@@ -236,9 +234,7 @@
                                         </div>
                                     </div>
                                     <div class="row" style="position: relative; top: 15px;">
-                                        <div class="col-12 text-center">
-                                            <button class="btn btn-secondary2" data-withdrawal="manual">Complete Withdrawal</button>
-                                        </div>
+                                        <div class="col-12 text-center"><button class="btn btn-secondary2" id="initiateWithdrawATM">Complete Withdrawal</button></div>
                                     </div>
                                 </div>
                             </div>
